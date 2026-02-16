@@ -1,0 +1,16 @@
+{
+  "codename": "DIGI2",
+  "ttf_path": "/assets/BeautifulPoliceOfficer.-rvv8x.ttf",
+  "bin_path": "/assets\\ui_font_DIGI2.bin",
+  "c_path": "/assets\\ui_font_DIGI2.c",
+  "cfg_path": "/assets\\ui_font_DIGI2.fcfg",
+  "size": 150,
+  "bpp": 2,
+  "letters": 0,
+  "ranges": [
+    "0x20-0x7f"
+  ],
+  "symbols": "",
+  "customparams": "--no-compress --no-prefilter",
+  "uploaded": false
+}

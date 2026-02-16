@@ -1,0 +1,164 @@
+{
+  "deftheme": {
+    "name": "Default",
+    "properties": [
+      {
+        "nid": 1000312,
+        "strtype": "THEME_COLOR",
+        "strval": "bgscreen",
+        "intarray": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "InheritedType": 0
+      },
+      {
+        "nid": 1000313,
+        "strtype": "THEME_COLOR",
+        "strval": "plaintxt",
+        "intarray": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "InheritedType": 0
+      },
+      {
+        "nid": 1000315,
+        "strtype": "THEME_COLOR",
+        "strval": "panelbg",
+        "intarray": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "InheritedType": 0
+      },
+      {
+        "nid": 1000351,
+        "strtype": "THEME_COLOR",
+        "strval": "pnlbordr",
+        "intarray": [
+          185,
+          183,
+          183,
+          255
+        ],
+        "InheritedType": 0
+      }
+    ]
+  },
+  "themes": [
+    {
+      "name": "light",
+      "properties": [
+        {
+          "nid": 1000312,
+          "strtype": "THEME_COLOR",
+          "strval": "bgscreen",
+          "intarray": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "InheritedType": 0
+        },
+        {
+          "nid": 1000313,
+          "strtype": "THEME_COLOR",
+          "strval": "plaintxt",
+          "intarray": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "InheritedType": 0
+        },
+        {
+          "nid": 1000315,
+          "strtype": "THEME_COLOR",
+          "strval": "panelbg",
+          "intarray": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "InheritedType": 0
+        },
+        {
+          "nid": 1000351,
+          "strtype": "THEME_COLOR",
+          "strval": "pnlbordr",
+          "intarray": [
+            185,
+            183,
+            183,
+            255
+          ],
+          "InheritedType": 0
+        }
+      ]
+    },
+    {
+      "name": "dark",
+      "properties": [
+        {
+          "nid": 1000312,
+          "strtype": "THEME_COLOR",
+          "strval": "bgscreen",
+          "intarray": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "InheritedType": 0
+        },
+        {
+          "nid": 1000313,
+          "strtype": "THEME_COLOR",
+          "strval": "plaintxt",
+          "intarray": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "InheritedType": 0
+        },
+        {
+          "nid": 1000315,
+          "strtype": "THEME_COLOR",
+          "strval": "panelbg",
+          "intarray": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "InheritedType": 0
+        },
+        {
+          "nid": 1000351,
+          "strtype": "THEME_COLOR",
+          "strval": "pnlbordr",
+          "intarray": [
+            13,
+            145,
+            213,
+            255
+          ],
+          "InheritedType": 0
+        }
+      ]
+    }
+  ],
+  "selected_theme": "light"
+}
