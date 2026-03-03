@@ -30,9 +30,9 @@ SPIClass touchscreenSPI = SPIClass(VSPI);
 XPT2046_Touchscreen touchscreen(XPT2046_CS, XPT2046_IRQ);
 int x, y, z;
 
-float lat = 40.7128;
-float lon = -74.0060;
-String apiKey = "-----";
+float lat = 40.28;
+float lon = -74.00;
+String apiKey = "";
 // String url_aqi = "http://api.openweathermap.org/data/2.5/air_pollution?lat=" + String(lat, 4) + "&lon=" + String(lon, 4) + "&appid=" + apiKey;
 
 float humiditydht = 0.0, temperaturedht = 0.0;
@@ -44,8 +44,8 @@ SimpleDHT22 dht22(4);
 uint32_t draw_buf[DRAW_BUF_SIZE / 4];
 
 const char *ssid = "iiscwlan";                // Your enterprise WiFi name
-const char *username = "----"; // Your username
-const char *password = "---";         // Your password
+const char *username = ""; // Your username
+const char *password = "";         // Your password
 
 int ti = 0;
 
@@ -56,8 +56,8 @@ const char *months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
                         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 int currentYr = 1970;
 
-const char *apiKey_lfm = "----";
-const char *lastfmUser = "---";
+const char *apiKey_lfm = "";
+const char *lastfmUser = "";
 
 int hr = 0;
 int mm = 0;
@@ -89,13 +89,37 @@ String tr, ar;
 
 void initWiFi()
 {
-  if (WiFiEnterprise.begin(ssid, username, password))
+  Serial.println("Connecting to WPA2 Enterprise...");
+
+  WiFi.mode(WIFI_STA);
+  WiFi.setAutoReconnect(true);
+  WiFi.setSleep(false);          // Important for enterprise stability
+  WiFi.disconnect(true);
+  delay(1000);
+
+  WiFiEnterprise.begin(ssid, username, password);
+
+  unsigned long startAttempt = millis();
+
+  while (WiFi.status() != WL_CONNECTED && millis() - startAttempt < 20000)
   {
-    Serial.println("✅ WiFi Connected!");
-    Serial.println("IP Address: " + WiFiEnterprise.localIP().toString());
+    delay(500);
+    Serial.print(".");
+  }
+
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    Serial.println("\n WiFi Connected!");
+    Serial.println("IP Address: " + WiFi.localIP().toString());
+
     timeClient.begin();
-    timeClient.update();
+    timeClient.forceUpdate();    // better than update()
+
     lv_scr_load(ui_Screen1);
+  }
+  else
+  {
+    Serial.println("\nEnterprise connection failed");
   }
 }
 
@@ -144,8 +168,8 @@ void fetchNowPlaying()
     }
     else
     {
-      lv_label_set_text_fmt(ui_track, "Welcome to Room 69");
-      lv_label_set_text_fmt(ui_arti, "R - Block");
+      lv_label_set_text_fmt(ui_track, "Welcome to DM");
+      lv_label_set_text_fmt(ui_arti, "IISc Banglore");
     }
   }
   else
@@ -164,19 +188,23 @@ void updateDate()
   int currentHour = hour();
   int currentMinute = minute();
   char timeStr[6];
+  currentYr = year();
+  if(currentYr != 1970)
+  {
   sprintf(timeStr, "%02d:%02d", currentHour, currentMinute);
   lv_label_set_text_fmt(ui_time, "%s", timeStr);
   lv_label_set_text_fmt(ui_time1, "%s", timeStr);
 
   int currentDay = weekday();
   int currentMonth = month();
-  currentYr = year();
+  
   int currday = day();
   String formattedDate = String(String(currday) + " " + months[currentMonth - 1]) + " " + String(currentYr);
   String weekDays[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
   String week = weekDays[currentDay - 1];
   lv_label_set_text_fmt(ui_date, "%s", formattedDate);
   lv_label_set_text_fmt(ui_week, "%s", week);
+  }
   // lv_label_set_text_fmt(ui_date1, "Date: %s", formattedDate);
 }
 
@@ -204,6 +232,10 @@ void loop()
   lv_task_handler(); // let the GUI do its work
   lv_tick_inc(4);    // tell LVGL how much time has passed
   delay(4);
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    initWiFi();
+  }
   if (millis() - previousMillis2 >= interval2)
   {
     previousMillis2 = millis();
@@ -217,15 +249,15 @@ void loop()
       previousMillis = millis();
       if (WiFiEnterprise.isConnected() && currentYr != 1970)
       {
-        Serial.println("📶 Still connected to enterprise network");
+        Serial.println("Still connected to enterprise network");
         Serial.print("IP: ");
         Serial.println(WiFiEnterprise.localIP());
       }
       else
       {
-
+        initWiFi();
         timeClient.update();
-        Serial.println("✅ Attempting NTP resync");
+        Serial.println(" Attempting NTP resync");
       }
       fetchNowPlaying();
       // getAQIData();
